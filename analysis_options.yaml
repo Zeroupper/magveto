@@ -1,0 +1,20 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - custom_lint
+
+  exclude: [build/**, lib/**.freezed.dart, lib/**.g.dart]
+  
+  errors:
+    included_file_warning: ignore
+    missing_required_param: error
+    missing_return: error
+    parameter_assignments: ignore
+
+    todo: ignore
+linter:
+  rules:
+    prefer_single_quotes: true
+    require_trailing_commas: true
+    avoid_print: true
