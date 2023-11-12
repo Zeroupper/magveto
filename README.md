@@ -1,4 +1,4 @@
-# 🌟 Welcome to the Magvető Community Project on GitHub! 🌟
+# 🌟 Welcome to the Magvető Community! 🌟
 
 ## About
 
