@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 
 class WebMenuBar extends StatelessWidget {
@@ -15,8 +14,7 @@ class WebMenuBar extends StatelessWidget {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 64.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             stops: const [0, 0.9],
@@ -46,34 +44,28 @@ class WebMenuBar extends StatelessWidget {
                     MenuItem(
                       menuName: Text(
                         'Magvető',
-                        style:
-                            mainMenuTextStyle ?? theme.textTheme.headlineSmall,
+                        style: mainMenuTextStyle ?? theme.textTheme.headlineSmall,
                       ),
                       subMenuTextStyleItems: [
                         Text(
                           'Történetünk',
-                          style:
-                              subMenuTextStyle ?? theme.textTheme.headlineSmall,
+                          style: subMenuTextStyle ?? theme.textTheme.headlineSmall,
                         ),
                         Text(
                           'Tagjaink',
-                          style:
-                              subMenuTextStyle ?? theme.textTheme.headlineSmall,
+                          style: subMenuTextStyle ?? theme.textTheme.headlineSmall,
                         ),
                         Text(
                           'CD-k',
-                          style:
-                              subMenuTextStyle ?? theme.textTheme.headlineSmall,
+                          style: subMenuTextStyle ?? theme.textTheme.headlineSmall,
                         ),
                         Text(
                           'Dalok / Kották',
-                          style:
-                              subMenuTextStyle ?? theme.textTheme.headlineSmall,
+                          style: subMenuTextStyle ?? theme.textTheme.headlineSmall,
                         ),
                         Text(
                           'Képek',
-                          style:
-                              subMenuTextStyle ?? theme.textTheme.headlineSmall,
+                          style: subMenuTextStyle ?? theme.textTheme.headlineSmall,
                         ),
                       ],
                     ),
@@ -83,6 +75,7 @@ class WebMenuBar extends StatelessWidget {
               MenuItem(
                 menuName: Text(
                   'Homokkomáromi Imatábor',
+                  textAlign: TextAlign.center,
                   style: mainMenuTextStyle ?? theme.textTheme.headlineSmall,
                 ),
                 subMenuTextStyleItems: [
@@ -103,6 +96,7 @@ class WebMenuBar extends StatelessWidget {
               MenuItem(
                 menuName: Text(
                   'Felnőtt Imatábor',
+                  textAlign: TextAlign.center,
                   style: mainMenuTextStyle ?? theme.textTheme.headlineSmall,
                 ),
                 subMenuTextStyleItems: [
@@ -123,6 +117,7 @@ class WebMenuBar extends StatelessWidget {
               MenuItem(
                 menuName: Text(
                   'Dicsőítés',
+                  textAlign: TextAlign.center,
                   style: mainMenuTextStyle ?? theme.textTheme.headlineSmall,
                 ),
                 subMenuTextStyleItems: [
@@ -139,6 +134,7 @@ class WebMenuBar extends StatelessWidget {
               MenuItem(
                 menuName: Text(
                   'Galléria',
+                  textAlign: TextAlign.end,
                   style: mainMenuTextStyle ?? theme.textTheme.headlineSmall,
                 ),
                 subMenuTextStyleItems: [
@@ -162,35 +158,6 @@ class WebMenuBar extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class subMenuTextStyleItem extends HookWidget {
-  final Widget child;
-  final EdgeInsets padding;
-  final VoidCallback onTap;
-
-  const subMenuTextStyleItem({
-    super.key,
-    required this.child,
-    required this.onTap,
-    required this.padding,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isHovered = useState(false);
-    return Material(
-      child: MouseRegion(
-        onExit: (event) => isHovered.value = false,
-        onEnter: (event) => isHovered.value = true,
-        child: Container(
-          color: isHovered.value ? Colors.black12 : Colors.transparent,
-          padding: padding,
-          child: child,
         ),
       ),
     );
@@ -227,8 +194,7 @@ class MenuItemState extends State<MenuItem> {
     return Flexible(
       child: ValueListenableBuilder(
         valueListenable: widget._controller,
-        builder: (BuildContext context, isMenuOpen, Widget? child) =>
-            MouseRegion(
+        builder: (BuildContext context, isMenuOpen, Widget? child) => MouseRegion(
           key: _menuKey,
           onEnter: (event) => _showMenu(
             context,
@@ -240,10 +206,7 @@ class MenuItemState extends State<MenuItem> {
               widget._controller.closeMenu();
             }
           },
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: widget.menuName,
-          ),
+          child: widget.menuName,
         ),
       ),
     );
@@ -265,8 +228,7 @@ class PopupMenuController extends ValueNotifier<bool> {
     final Offset buttonPosition = button.localToGlobal(Offset.zero);
 
     double menuWidth = 240.0;
-    double availableWidth =
-        MediaQuery.of(context).size.width - buttonPosition.dx;
+    double availableWidth = MediaQuery.of(context).size.width - buttonPosition.dx;
     bool fitsRight = availableWidth >= menuWidth;
 
     final RelativeRect position = RelativeRect.fromRect(
@@ -288,7 +250,6 @@ class PopupMenuController extends ValueNotifier<bool> {
         left: position.left,
         width: menuWidth,
         child: Material(
-          
           elevation: 4.0, // Optional: adds shadow for 3D effect
           borderRadius: BorderRadius.circular(10.0), //
           child: MouseRegion(
@@ -327,8 +288,7 @@ class PopupMenuController extends ValueNotifier<bool> {
   }
 
   void afterLayout(_) {
-    final RenderBox? renderBox =
-        overlayKey.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? renderBox = overlayKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
     final size = renderBox.size;
     final Offset position = renderBox.localToGlobal(Offset.zero);

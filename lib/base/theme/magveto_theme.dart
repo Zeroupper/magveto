@@ -16,6 +16,15 @@ class MagvetoTheme {
           ),
         ),
         textTheme: MagvetoTextTheme().light,
+        inputDecorationTheme: InputDecorationTheme(
+          fillColor: Colors.white,
+          filled: true,
+          hintStyle: MagvetoTextTheme().light.bodyLarge,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+            borderSide: const BorderSide(color: Colors.black),
+          ),
+        ),
       );
 
   ThemeData get dark => ThemeData(

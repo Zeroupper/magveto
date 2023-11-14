@@ -39,7 +39,7 @@ class HomeSection extends StatelessWidget {
                         data: theme.copyWith(),
                         child: ElevatedButton(
                           onPressed: () {},
-                          style: ButtonStyle().big(theme),
+                          style: const ButtonStyle().big(theme),
                           child: const Text('Csatlakozz hozzánk!'),
                         ),
                       ),
