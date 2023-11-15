@@ -41,9 +41,7 @@ class FlexibleContentWidget extends StatelessWidget {
             BoxShadow(offset: Offset(0, 2), blurRadius: 4, spreadRadius: 0),
           ],
         ),
-        width: imagePosition == ImagePosition.top || imagePosition == ImagePosition.bottom
-            ? width.toDouble()
-            : 0.4 * width,
+        width: imagePosition == ImagePosition.top || imagePosition == ImagePosition.bottom ? width.toDouble() : 0.4 * width,
         height: imagePosition == ImagePosition.left || imagePosition == ImagePosition.right ? null : 0.3 * height,
         child: imagePath == null
             ? const SizedBox(
@@ -80,9 +78,7 @@ class FlexibleContentWidget extends StatelessWidget {
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: imagePosition == ImagePosition.top
-                  ? [imageWidget, const Gap(32.0), textWidget]
-                  : [textWidget, const Gap(32.0), imageWidget],
+              children: imagePosition == ImagePosition.top ? [imageWidget, const Gap(32.0), textWidget] : [textWidget, const Gap(32.0), imageWidget],
             )
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,

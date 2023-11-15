@@ -35,22 +35,16 @@ class EventCard extends StatelessWidget {
                   children: [
                     Text(
                       event.name,
-                      style: isPrimary
-                          ? theme.textTheme.headlineLarge.withSemiBold()
-                          : theme.textTheme.headlineSmall.withSemiBold(),
+                      style: isPrimary ? theme.textTheme.headlineLarge.withSemiBold() : theme.textTheme.headlineSmall.withSemiBold(),
                     ),
                     const Gap(32.0),
                     Text(
                       event.location,
-                      style: isPrimary
-                          ? theme.textTheme.headlineMedium
-                          : theme.textTheme.titleMedium,
+                      style: isPrimary ? theme.textTheme.headlineMedium : theme.textTheme.titleMedium,
                     ),
                     Text(
                       event.startTime.toString(),
-                      style: isPrimary
-                          ? theme.textTheme.headlineMedium
-                          : theme.textTheme.titleMedium,
+                      style: isPrimary ? theme.textTheme.headlineMedium : theme.textTheme.titleMedium,
                     ),
                   ],
                 ),

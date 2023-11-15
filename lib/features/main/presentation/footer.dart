@@ -34,8 +34,7 @@ class Footer extends StatelessWidget {
                   const Gap(8.0),
                   Text(
                     '„Jöjjetek mind és ujjongjatok végtelen szeretetén! Hirdessétek napról napra a megváltás örömhírét!”',
-                    style: theme.textTheme.bodyLarge
-                        ?.copyWith(color: const Color(0xFFFFCF69), fontStyle: FontStyle.italic),
+                    style: theme.textTheme.bodyLarge?.copyWith(color: const Color(0xFFFFCF69), fontStyle: FontStyle.italic),
                   ),
                 ],
               ),

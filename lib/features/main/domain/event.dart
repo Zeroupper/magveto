@@ -28,7 +28,16 @@ class Event with _$Event {
     EventType type = EventType.general,
     DateTime? startTime,
   }) {
-    return Event(id: id, creationTime: DateTime.now(), imagePath: imagePath, name: name, description: description, startTime: DateTime.now(), location: location, type: type);
+    return Event(
+      id: id,
+      creationTime: DateTime.now(),
+      imagePath: imagePath,
+      name: name,
+      description: description,
+      startTime: DateTime.now(),
+      location: location,
+      type: type,
+    );
   }
 }
 

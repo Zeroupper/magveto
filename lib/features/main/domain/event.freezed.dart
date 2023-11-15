@@ -36,23 +36,14 @@ mixin _$Event {
 
 /// @nodoc
 abstract class $EventCopyWith<$Res> {
-  factory $EventCopyWith(Event value, $Res Function(Event) then) =
-      _$EventCopyWithImpl<$Res, Event>;
+  factory $EventCopyWith(Event value, $Res Function(Event) then) = _$EventCopyWithImpl<$Res, Event>;
   @useResult
   $Res call(
-      {String id,
-      DateTime creationTime,
-      String imagePath,
-      String name,
-      String description,
-      DateTime startTime,
-      String location,
-      EventType type});
+      {String id, DateTime creationTime, String imagePath, String name, String description, DateTime startTime, String location, EventType type});
 }
 
 /// @nodoc
-class _$EventCopyWithImpl<$Res, $Val extends Event>
-    implements $EventCopyWith<$Res> {
+class _$EventCopyWithImpl<$Res, $Val extends Event> implements $EventCopyWith<$Res> {
   _$EventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -111,29 +102,16 @@ class _$EventCopyWithImpl<$Res, $Val extends Event>
 
 /// @nodoc
 abstract class _$$EventImplCopyWith<$Res> implements $EventCopyWith<$Res> {
-  factory _$$EventImplCopyWith(
-          _$EventImpl value, $Res Function(_$EventImpl) then) =
-      __$$EventImplCopyWithImpl<$Res>;
+  factory _$$EventImplCopyWith(_$EventImpl value, $Res Function(_$EventImpl) then) = __$$EventImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String id,
-      DateTime creationTime,
-      String imagePath,
-      String name,
-      String description,
-      DateTime startTime,
-      String location,
-      EventType type});
+      {String id, DateTime creationTime, String imagePath, String name, String description, DateTime startTime, String location, EventType type});
 }
 
 /// @nodoc
-class __$$EventImplCopyWithImpl<$Res>
-    extends _$EventCopyWithImpl<$Res, _$EventImpl>
-    implements _$$EventImplCopyWith<$Res> {
-  __$$EventImplCopyWithImpl(
-      _$EventImpl _value, $Res Function(_$EventImpl) _then)
-      : super(_value, _then);
+class __$$EventImplCopyWithImpl<$Res> extends _$EventCopyWithImpl<$Res, _$EventImpl> implements _$$EventImplCopyWith<$Res> {
+  __$$EventImplCopyWithImpl(_$EventImpl _value, $Res Function(_$EventImpl) _then) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -197,8 +175,7 @@ class _$EventImpl implements _Event {
       required this.location,
       required this.type});
 
-  factory _$EventImpl.fromJson(Map<String, dynamic> json) =>
-      _$$EventImplFromJson(json);
+  factory _$EventImpl.fromJson(Map<String, dynamic> json) => _$$EventImplFromJson(json);
 
   @override
   final String id;
@@ -228,30 +205,23 @@ class _$EventImpl implements _Event {
         (other.runtimeType == runtimeType &&
             other is _$EventImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.creationTime, creationTime) ||
-                other.creationTime == creationTime) &&
-            (identical(other.imagePath, imagePath) ||
-                other.imagePath == imagePath) &&
+            (identical(other.creationTime, creationTime) || other.creationTime == creationTime) &&
+            (identical(other.imagePath, imagePath) || other.imagePath == imagePath) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.startTime, startTime) ||
-                other.startTime == startTime) &&
-            (identical(other.location, location) ||
-                other.location == location) &&
+            (identical(other.description, description) || other.description == description) &&
+            (identical(other.startTime, startTime) || other.startTime == startTime) &&
+            (identical(other.location, location) || other.location == location) &&
             (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, creationTime, imagePath,
-      name, description, startTime, location, type);
+  int get hashCode => Object.hash(runtimeType, id, creationTime, imagePath, name, description, startTime, location, type);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$EventImplCopyWith<_$EventImpl> get copyWith =>
-      __$$EventImplCopyWithImpl<_$EventImpl>(this, _$identity);
+  _$$EventImplCopyWith<_$EventImpl> get copyWith => __$$EventImplCopyWithImpl<_$EventImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -292,6 +262,5 @@ abstract class _Event implements Event {
   EventType get type;
   @override
   @JsonKey(ignore: true)
-  _$$EventImplCopyWith<_$EventImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$EventImplCopyWith<_$EventImpl> get copyWith => throw _privateConstructorUsedError;
 }

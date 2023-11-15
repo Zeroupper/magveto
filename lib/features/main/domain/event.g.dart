@@ -17,8 +17,7 @@ _$EventImpl _$$EventImplFromJson(Map<String, dynamic> json) => _$EventImpl(
       type: $enumDecode(_$EventTypeEnumMap, json['type']),
     );
 
-Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$$EventImplToJson(_$EventImpl instance) => <String, dynamic>{
       'id': instance.id,
       'creationTime': instance.creationTime.toIso8601String(),
       'imagePath': instance.imagePath,
