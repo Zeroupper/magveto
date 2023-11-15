@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "45320307637",
+    "project_id": "magveto-web",
+    "storage_bucket": "magveto-web.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:45320307637:android:c7521d886c8e8d7439cffc",
+        "android_client_info": {
+          "package_name": "com.example.magveto"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDArWJo3foieujzxINpQ1DXXPPcjO_XAzg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
