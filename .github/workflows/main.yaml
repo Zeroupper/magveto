@@ -13,6 +13,7 @@ jobs:
     with:
       flutter_channel: stable
       flutter_version: 3.13.6
+      format_line_length: 150
 
   build:
     name: Build
