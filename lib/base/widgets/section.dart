@@ -4,26 +4,32 @@ import 'package:flutter/material.dart';
 
 class Section extends StatelessWidget {
   final Widget child;
+  final Widget? background;
   final EdgeInsets? padding;
-  final double? height;
+  final double heightFactor;
   final String? title;
+  final SectionFit fit;
 
   const Section({
     super.key,
     required this.child,
+    this.background,
     this.padding,
-    this.height,
     this.title,
+    this.fit = SectionFit.expanded,
+    this.heightFactor = 1,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    final content = Align(
       alignment: Alignment.center,
       child: Container(
         constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height * (height ?? 1),
-          maxHeight: MediaQuery.of(context).size.height,
+          minHeight: MediaQuery.of(context).size.height * heightFactor,
+          maxHeight: fit == SectionFit.expanded
+              ? MediaQuery.of(context).size.height * heightFactor
+              : double.infinity,
           maxWidth: min(MediaQuery.of(context).size.width, 1600),
         ),
         padding: padding ?? EdgeInsets.zero,
@@ -31,16 +37,29 @@ class Section extends StatelessWidget {
           children: [
             if (title != null)
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24.0),
+                padding: const EdgeInsets.all(24.0),
                 child: Text(
                   title!,
                   style: Theme.of(context).textTheme.displayMedium,
+                  textAlign: TextAlign.center,
                 ),
               ),
-            Expanded(child: child),
+            fit == SectionFit.expanded ? Expanded(child: child) : child,
           ],
         ),
       ),
     );
+    if (background != null) {
+      return Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(child: background!),
+          content,
+        ],
+      );
+    }
+    return content;
   }
 }
+
+enum SectionFit { loose, expanded }

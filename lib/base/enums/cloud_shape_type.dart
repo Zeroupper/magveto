@@ -1,0 +1,1 @@
+enum CloudShapeType { wide, narrow }

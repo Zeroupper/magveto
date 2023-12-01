@@ -5,10 +5,19 @@ import 'package:magveto/base/widgets/hoverable_text.dart';
 
 class TeaserTextWidget extends StatelessWidget {
   final String body;
-  final String headline;
-  final VoidCallback onTap;
+  final String? headline;
+  final TextStyle? bodyTextStyle;
+  final TextStyle? headlineTextStyle;
+  final VoidCallback? onReadMoreTap;
 
-  const TeaserTextWidget({super.key, required this.body, required this.headline, required this.onTap});
+  const TeaserTextWidget({
+    super.key,
+    required this.body,
+    this.headline,
+    this.onReadMoreTap,
+    this.bodyTextStyle,
+    this.headlineTextStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +27,33 @@ class TeaserTextWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          headline,
-          style: theme.textTheme.headlineMedium,
-        ),
-        const Gap(24.0),
-        RichText(
-          textAlign: TextAlign.justify,
-          text: TextSpan(
-            style: theme.textTheme.bodyLarge,
+        if (headline != null) ...[
+          Text(
+            headline!,
+            style: headlineTextStyle ?? theme.textTheme.headlineMedium,
+          ),
+          const Gap(24.0),
+        ],
+        SelectableText.rich(
+          TextSpan(
+            style: bodyTextStyle ?? theme.textTheme.bodyLarge,
             children: [
               TextSpan(
                 text: '$body ',
               ),
-              WidgetSpan(
-                child: HoverableText(
-                  text: 'Read more...',
-                  style: TextStyle(color: theme.colorScheme.primary).withSemiBold(),
-                  onTap: onTap,
+              if (onReadMoreTap != null)
+                WidgetSpan(
+                  child: HoverableText(
+                    text: 'Read more...',
+                    style: TextStyle(color: theme.colorScheme.primary)
+                        .withSemiBold(),
+                    onTap: onReadMoreTap!,
+                  ),
                 ),
-              ),
             ],
           ),
+          textAlign: TextAlign.justify,
+          showCursor: false,
         ),
       ],
     );

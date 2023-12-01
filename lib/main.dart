@@ -7,14 +7,17 @@ import 'package:magveto/base/theme/magveto_theme.dart';
 import 'package:magveto/firebase_options.dart';
 
 void main() async {
-  final router = GoRouter(routes: $appRoutes);
+  final router = GoRouter(
+    routes: $appRoutes,
+    initialLocation: const HomeRoute().location,
+  );
 
   final theme = MagvetoTheme();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   runApp(
     ProviderScope(
       child: MaterialApp.router(

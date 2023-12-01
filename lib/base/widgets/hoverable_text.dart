@@ -5,7 +5,12 @@ class HoverableText extends StatefulWidget {
   final TextStyle? style;
   final String text;
 
-  const HoverableText({super.key, required this.onTap, required this.style, required this.text});
+  const HoverableText({
+    super.key,
+    required this.onTap,
+    required this.style,
+    required this.text,
+  });
 
   @override
   HoverableTextState createState() => HoverableTextState();
@@ -17,10 +22,14 @@ class HoverableTextState extends State<HoverableText> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      hitTestBehavior: HitTestBehavior.translucent,
+      cursor: MaterialStateMouseCursor.clickable,
       onEnter: (_) => setState(() => _isHovering = true),
       onExit: (_) => setState(() => _isHovering = false),
       child: GestureDetector(
-        onTap: widget.onTap,
+        onTap: () {
+          widget.onTap();
+        },
         child: Text(
           widget.text,
           style: _isHovering
