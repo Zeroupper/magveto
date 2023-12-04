@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:magveto_web/base/helpers/section_helper.dart';
 import 'package:magveto_web/base/routes/routes.dart';
 import 'package:magveto_web/base/widgets/web_menu_bar.dart';
 
@@ -20,56 +21,53 @@ class MagvetoScaffold extends StatelessWidget {
                 WebMenuItem(
                   name: 'Magvető',
                   items: [
-                    'Történetünk',
-                    'Tagjaink',
-                    'CD-k',
-                    'Dalok / Kották',
-                    'Képek',
+                    SectionHelper.magveto().about,
+                    SectionHelper.magveto().goal,
+                    SectionHelper.magveto().team,
+                    SectionHelper.magveto().media,
+                    SectionHelper.magveto().prevTeam,
                   ],
                   onTap: () {
-                    context.goNamed(HomeRoute.name);
+                    context.goNamed(MagvetoRoute.name);
+                  },
+                  onSubMenuTap: (item) {
+                    scrollToSection(MagvetoRoute.sectionKeys[item]);
                   },
                 ),
                 WebMenuItem(
                   name: 'Homokkomáromi Imatábor',
                   items: [
-                    'Az imatábor lényege',
-                    'Kezdetek',
-                    'Képek',
+                    SectionHelper.hKCamp().about,
+                    SectionHelper.hKCamp().team,
                   ],
                   onTap: () {
                     context.goNamed(HKCampRoute.name);
+                  },
+                  onSubMenuTap: (item) {
+                    scrollToSection(HKCampRoute.sectionKeys[item]);
                   },
                 ),
                 WebMenuItem(
                   name: 'Felnőtt Imatábor',
                   items: [
-                    'Mit jelent?',
-                    'Tagjaink',
-                    'Képek',
+                    SectionHelper.prayCamp().about,
+                    SectionHelper.prayCamp().team,
                   ],
                   onTap: () {
                     context.goNamed(PrayCampRoute.name);
                   },
+                  onSubMenuTap: (item) {
+                    scrollToSection(PrayCampRoute.sectionKeys[item]);
+                  },
                 ),
                 WebMenuItem(
                   name: 'Dicsőítés',
-                  items: [
-                    'Elindult',
-                    'Képek',
-                  ],
                   onTap: () {
                     context.goNamed(PraiseRoute.name);
                   },
                 ),
                 WebMenuItem(
                   name: 'Galléria',
-                  items: [
-                    'Passiójáték',
-                    '60 másodperc',
-                    'Betlehem',
-                    'Régi emlékek',
-                  ],
                   onTap: () {
                     context.goNamed(GalleryRoute.name);
                   },
@@ -81,4 +79,17 @@ class MagvetoScaffold extends StatelessWidget {
       ),
     );
   }
+    void scrollToSection(GlobalKey? key) {
+    if (key == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (key.currentContext != null) {
+        Scrollable.ensureVisible(
+          key.currentContext!,
+          duration: const Duration(milliseconds: 800),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
 }
+

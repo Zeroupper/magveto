@@ -7,21 +7,21 @@ part of 'routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $homeRoute,
+      $magvetoRoute,
       $hKCampRoute,
       $prayCampRoute,
       $praiseRoute,
       $galleryRoute,
     ];
 
-RouteBase get $homeRoute => GoRouteData.$route(
+RouteBase get $magvetoRoute => GoRouteData.$route(
       path: '/',
-      name: 'HomeRoute',
-      factory: $HomeRouteExtension._fromState,
+      name: 'MagvetoRoute',
+      factory: $MagvetoRouteExtension._fromState,
     );
 
-extension $HomeRouteExtension on HomeRoute {
-  static HomeRoute _fromState(GoRouterState state) => const HomeRoute();
+extension $MagvetoRouteExtension on MagvetoRoute {
+  static MagvetoRoute _fromState(GoRouterState state) => MagvetoRoute();
 
   String get location => GoRouteData.$location(
         '/',

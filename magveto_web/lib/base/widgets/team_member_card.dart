@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:magveto_web/base/domain/team_member.dart';
-import 'package:magveto_web/base/extensions/custom_theme.dart';
 import 'package:magveto_web/base/extensions/extensions.dart';
 
 class TeamMemberCard extends StatelessWidget {
@@ -13,7 +12,7 @@ class TeamMemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final customTheme = Theme.of(context).extension<CustomTheme>();
+    final customTheme = context.customTheme();
 
     return Card(
       child: Container(

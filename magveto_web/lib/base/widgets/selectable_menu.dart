@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:magveto_web/base/widgets/web_clickable_widget.dart';
 
 class SelectableMenu extends StatefulWidget {
   final void Function(int) onSelectedItem;
@@ -64,32 +65,29 @@ class SelectableItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onSelect,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SelectionContainer.disabled(
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  name,
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight:
-                        isActive ? FontWeight.bold : FontWeight.normal,
-                  ),
-                  textAlign: TextAlign.center,
+    return WebClickableWidget(
+      onTap: onSelect,
+      builder: (_, __) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SelectionContainer.disabled(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                name,
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight:
+                      isActive ? FontWeight.bold : FontWeight.normal,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
-            Divider(
-              thickness: isActive ? 4 : 1,
-              color: isActive ? theme.colorScheme.primary : null,
-            ),
-          ],
-        ),
+          ),
+          Divider(
+            thickness: isActive ? 4 : 1,
+            color: isActive ? theme.colorScheme.primary : null,
+          ),
+        ],
       ),
     );
   }

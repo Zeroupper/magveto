@@ -17,7 +17,7 @@ class EventTimetableItemeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final customTheme = Theme.of(context).extension<CustomTheme>();
+    final customTheme = context.theme().extension<CustomTheme>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),

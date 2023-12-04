@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magveto_web/base/extensions/extensions.dart';
 import 'package:magveto_web/base/routes/routes.dart';
+import 'package:magveto_web/base/widgets/web_clickable_widget.dart';
 
 class WebMenuItem {
   final String name;
   final List<String> items;
-  final TextStyle? menuTextStyle;
-  final TextStyle? subMenuTextStyle;
   final VoidCallback onTap;
+  final Function(String)? onSubMenuTap;
 
-  WebMenuItem({
+  WebMenuItem( {
     required this.name,
-    required this.items,
     required this.onTap,
-    this.menuTextStyle,
-    this.subMenuTextStyle,
+    this.onSubMenuTap,
+    this.items = const <String>[],
   });
 }
 
@@ -81,30 +80,27 @@ class _WebMenuBarState extends State<WebMenuBar> with SingleTickerProviderStateM
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () {
-                        context.goNamed(HomeRoute.name);
-                      },
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Image.asset(
-                              'assets/logo/magveto_logo.png',
-                              width: 80,
-                              height: 80,
-                            ),
+                  WebClickableWidget(
+                    onTap: () {
+                      context.goNamed(MagvetoRoute.name);
+                    },
+                    builder: (_, __) => Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: Image.asset(
+                            'assets/logo/magveto_logo.png',
+                            width: 80,
+                            height: 80,
                           ),
-                          if (!isDesktop)
-                            Text(
-                              'Magvető',
-                              style: theme.textTheme.headlineLarge,
-                              textAlign: TextAlign.center,
-                            ),
-                        ],
-                      ),
+                        ),
+                        if (!isDesktop)
+                          Text(
+                            'Magvető',
+                            style: theme.textTheme.headlineLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                      ],
                     ),
                   ),
                   if (isDesktop)
@@ -114,20 +110,20 @@ class _WebMenuBarState extends State<WebMenuBar> with SingleTickerProviderStateM
                         children: [
                           ...widget.menuItems.map(
                             (menuItem) => MenuItem(
-                              menuName: MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: Text(
-                                  menuItem.name,
-                                  style: menuItem.menuTextStyle ?? theme.textTheme.headlineSmall,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
+                              menuName: menuItem.name,
                               onTap: menuItem.onTap,
                               items: menuItem.items
                                   .map(
-                                    (item) => Text(
-                                      item,
-                                      style: menuItem.subMenuTextStyle ?? theme.textTheme.headlineSmall,
+                                    (subMenuItem) => WebClickableWidget(
+                                      builder: (_, isHovered) => Text(
+                                        subMenuItem,
+                                        style: theme.textTheme.headlineSmall,
+                                      ),
+                                      onTap: () {
+                                        OverlayManager().closeAllOverlays();
+                                        menuItem.onTap();
+                                        menuItem.onSubMenuTap?.call(subMenuItem);
+                                      },
                                     ),
                                   )
                                   .toList(),
@@ -159,9 +155,9 @@ class _WebMenuBarState extends State<WebMenuBar> with SingleTickerProviderStateM
     final theme = Theme.of(context);
 
     _overlayEntryMenu = OverlayEntry(
-      builder: (context) => GestureDetector(
+      builder: (context) => WebClickableWidget(
         onTap: onMenuClick,
-        child: Container(
+        builder: (_, __) => Container(
           decoration: BoxDecoration(
             color: theme.colorScheme.inverseSurface.withOpacity(0.5),
             backgroundBlendMode: BlendMode.darken,
@@ -195,18 +191,18 @@ class _WebMenuBarState extends State<WebMenuBar> with SingleTickerProviderStateM
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ...widget.menuItems.map(
-                          (menuItem) => GestureDetector(
+                          (menuItem) => WebClickableWidget(
                             onTap: () {
                               menuItem.onTap();
                               OverlayManager().removeOverlay(_overlayEntryMenu!);
                             },
-                            child: MouseRegion(
+                            builder: (_, __) => MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
                                   menuItem.name,
-                                  style: Theme.of(context).textTheme.headlineMedium,
+                                  style: context.theme().textTheme.headlineMedium,
                                 ),
                               ),
                             ),
@@ -246,6 +242,8 @@ class _WebMenuBarState extends State<WebMenuBar> with SingleTickerProviderStateM
     });
   }
 
+
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -254,7 +252,7 @@ class _WebMenuBarState extends State<WebMenuBar> with SingleTickerProviderStateM
 }
 
 class MenuItem extends StatefulWidget {
-  final Widget menuName;
+  final String menuName;
   final VoidCallback onTap;
   final Color? selectedColor;
   final List<Widget> items;
@@ -277,15 +275,17 @@ class MenuItemState extends State<MenuItem> {
   final GlobalKey _menuKey = GlobalKey();
 
   void _showMenu(BuildContext context, RenderBox button) {
+    if (widget.items.isEmpty) return;
     widget._controller.openMenu(context, widget.items, button);
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme();
     return Flexible(
-      child: GestureDetector(
+      child: WebClickableWidget(
         onTap: widget.onTap,
-        child: ValueListenableBuilder(
+        builder: (_, isHovered) => ValueListenableBuilder(
           valueListenable: widget._controller,
           builder: (BuildContext context, isMenuOpen, Widget? child) => MouseRegion(
             key: _menuKey,
@@ -299,7 +299,14 @@ class MenuItemState extends State<MenuItem> {
                 widget._controller.closeMenu();
               }
             },
-            child: widget.menuName,
+            child: Text(
+              widget.menuName,
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: isHovered ? FontWeight.w500 : FontWeight.normal,
+                color: isHovered ? theme.primaryColor : theme.colorScheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),

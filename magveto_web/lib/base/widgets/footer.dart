@@ -53,7 +53,7 @@ class Footer extends StatelessWidget {
                 children: [
                   const Gap(12.0),
                   HoverableText(
-                    onTap: () => context.goNamed(HomeRoute.name),
+                    onTap: () => context.goNamed(MagvetoRoute.name),
                     text: 'Magvető',
                     style: theme.textTheme.titleLarge?.copyWith(
                       color: inverseFontColor,

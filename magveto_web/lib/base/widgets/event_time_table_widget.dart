@@ -23,7 +23,7 @@ class EventTimetableWidget extends StatelessWidget {
           children: [
             Text(
               'ESEMÉNYEK',
-              style: Theme.of(context).textTheme.headlineMedium?.withSemiBold(),
+              style: context.theme().textTheme.headlineMedium?.withSemiBold(),
             ),
             const Divider(),
             ...events.map(

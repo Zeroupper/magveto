@@ -4,16 +4,7 @@ import 'package:magveto_web/base/extensions/extensions.dart';
 import 'package:magveto_web/base/widgets/section.dart';
 
 class HomeSection extends StatelessWidget {
-  final String title;
-  final VoidCallback? onTap;
-  final String imagePath;
-
-  const HomeSection({
-    super.key,
-    required this.title,
-    this.onTap,
-    required this.imagePath,
-  });
+  const HomeSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +29,7 @@ class HomeSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        title,
+                        'Üdvözlünk a Magvető közösség honlapján!',
                         style: context.isDesktop() ? theme.textTheme.displayLarge.withBold() : theme.textTheme.displayMedium.withBold(),
                         textAlign: TextAlign.center,
                       ),
@@ -51,14 +42,12 @@ class HomeSection extends StatelessWidget {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      if (onTap != null) ...[
-                        const Gap(36.0),
-                        ElevatedButton(
-                          onPressed: onTap,
-                          style: const ButtonStyle().big(theme),
-                          child: const Text('Keress minket!'),
-                        ),
-                      ],
+                      const Gap(36.0),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: const ButtonStyle().big(theme),
+                        child: const Text('Keress minket!'),
+                      ),
                     ],
                   ),
                 ),

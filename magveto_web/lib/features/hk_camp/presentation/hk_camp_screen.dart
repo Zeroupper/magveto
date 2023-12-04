@@ -6,6 +6,7 @@ import 'package:lorem_ipsum/lorem_ipsum.dart';
 import 'package:magveto_web/base/domain/review.dart';
 import 'package:magveto_web/base/enums/cloud_shape_type.dart';
 import 'package:magveto_web/base/extensions/extensions.dart';
+import 'package:magveto_web/base/helpers/section_helper.dart';
 import 'package:magveto_web/base/widgets/cloud_widget.dart';
 import 'package:magveto_web/base/widgets/magveto_scaffold.dart';
 import 'package:magveto_web/base/widgets/review_widget.dart';
@@ -17,7 +18,8 @@ import 'package:magveto_web/base/widgets/home_section.dart';
 import 'package:magveto_web/base/widgets/footer.dart';
 
 class HKCampScreen extends StatefulWidget {
-  const HKCampScreen({super.key});
+  final Map<String, GlobalKey> sectionKeys;
+  const HKCampScreen({super.key, required this.sectionKeys});
 
   @override
   State<HKCampScreen> createState() => _HKCampScreenState();
@@ -97,17 +99,22 @@ class _HKCampScreenState extends State<HKCampScreen> {
           child: Column(
             children: [
               const HomeSection(
-                title: '2024. Homokkomáromi imatábor',
+                title: 'Homokkomáromi imatábor',
                 imagePath: 'assets/images/small_group.jpg',
               ),
               const FeaturesSection(),
-              const AboutSection(),
+              AboutSection(
+                key: widget.sectionKeys[SectionHelper.hKCamp().about],
+              ),
               HKReviewsSection(
                 key: _feedbackSectionKey,
                 heightFactor: context.isMobile() ? 1.0 : 0.7,
                 currentReview: currentReviewShown,
               ),
-              const TeamSection(),
+              TeamSection(
+                key: widget.sectionKeys[SectionHelper.hKCamp().team],
+                title: SectionHelper.hKCamp().team,
+              ),
               const Footer(),
             ],
           ),

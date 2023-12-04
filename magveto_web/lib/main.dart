@@ -9,7 +9,7 @@ import 'package:magveto_web/firebase_options.dart';
 void main() async {
   final router = GoRouter(
     routes: $appRoutes,
-    initialLocation: const HomeRoute().location,
+    initialLocation: MagvetoRoute().location,
   );
 
   final theme = MagvetoTheme();

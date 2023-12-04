@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:magveto_web/base/extensions/extensions.dart';
-import 'package:magveto_web/base/widgets/teaser_text_widget.dart';
 
 enum ImagePosition { top, bottom, left, right }
 
 class FlexibleContentWidget extends StatefulWidget {
-  final String body;
-  final TextStyle? bodyTextStyle;
-  final TextStyle? headlineTextStyle;
+  final Widget child;
   final String? headline;
   final String? imagePath;
   final VoidCallback? onReadMoreTap;
@@ -19,7 +16,7 @@ class FlexibleContentWidget extends StatefulWidget {
 
   const FlexibleContentWidget({
     super.key,
-    required this.body,
+    required this.child,
     this.headline,
     this.imagePath,
     this.onReadMoreTap,
@@ -27,8 +24,6 @@ class FlexibleContentWidget extends StatefulWidget {
     this.actionButton,
     this.padding,
     this.margin,
-    this.bodyTextStyle,
-    this.headlineTextStyle,
   });
 
   @override
@@ -36,16 +31,9 @@ class FlexibleContentWidget extends StatefulWidget {
 }
 
 class _FlexibleContentWidgetState extends State<FlexibleContentWidget> {
-  late ImagePosition? adaptiveImagePosition;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (context.isDesktop()) {
-      adaptiveImagePosition = widget.imagePosition;
-    } else {
-      adaptiveImagePosition = ImagePosition.bottom;
-    }
   }
 
   @override
@@ -62,7 +50,7 @@ class _FlexibleContentWidgetState extends State<FlexibleContentWidget> {
             BoxShadow(offset: Offset(0, 2), blurRadius: 4, spreadRadius: 0),
           ],
         ),
-        height: adaptiveImagePosition == ImagePosition.left || adaptiveImagePosition == ImagePosition.right ? null : 0.3 * height,
+        height: widget.imagePosition == ImagePosition.left || widget.imagePosition == ImagePosition.right ? null : 0.3 * height,
         child: widget.imagePath == null
             ? const SizedBox(
                 width: 640,
@@ -87,13 +75,8 @@ class _FlexibleContentWidgetState extends State<FlexibleContentWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TeaserTextWidget(
-              body: widget.body,
-              bodyTextStyle: widget.bodyTextStyle,
-              headlineTextStyle: widget.headlineTextStyle,
-              headline: widget.headline,
-              onReadMoreTap: widget.onReadMoreTap,
-            ),
+            widget.child,
+            
             const Gap(24.0),
             if (widget.actionButton != null) widget.actionButton!,
           ],
@@ -104,23 +87,50 @@ class _FlexibleContentWidgetState extends State<FlexibleContentWidget> {
     return Container(
       margin: widget.margin ?? EdgeInsets.zero,
       padding: widget.padding ?? const EdgeInsets.all(64.0),
-      child: adaptiveImagePosition == ImagePosition.top || adaptiveImagePosition == ImagePosition.bottom
+      child: widget.imagePosition == ImagePosition.top || widget.imagePosition == ImagePosition.bottom
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: adaptiveImagePosition == ImagePosition.top
-                  ? [imageWidget, const Gap(32.0), textWidget]
-                  : [textWidget, const Gap(32.0), imageWidget],
+              children: widget.imagePosition == ImagePosition.top
+                  ? [
+                      if (context.isDesktop())
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Expanded(child: imageWidget),
+                              const Gap(32.0),
+                            ],
+                          ),
+                        ),
+                      textWidget,
+                    ]
+                  : [
+                      textWidget,
+                      if (context.isDesktop())
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const Gap(32.0),
+                              Expanded(child: imageWidget),
+                            ],
+                          ),
+                        ),
+                    ],
             )
           : Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: adaptiveImagePosition == ImagePosition.left
+              children: widget.imagePosition == ImagePosition.left
                   ? [
-                      Expanded(
-                        child: imageWidget,
-                      ),
-                      const Gap(32.0),
+                      if (context.isDesktop())
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Expanded(child: imageWidget),
+                              const Gap(32.0),
+                            ],
+                          ),
+                        ),
                       Expanded(
                         child: textWidget,
                       ),
@@ -129,10 +139,17 @@ class _FlexibleContentWidgetState extends State<FlexibleContentWidget> {
                       Expanded(
                         child: textWidget,
                       ),
-                      const Gap(32.0),
-                      Expanded(
-                        child: imageWidget,
-                      ),
+                      if (context.isDesktop())
+                        Expanded(
+                          child: Row(
+                            children: [
+                              const Gap(32.0),
+                              Expanded(
+                                child: imageWidget,
+                              ),
+                            ],
+                          ),
+                        ),
                     ],
             ),
     );

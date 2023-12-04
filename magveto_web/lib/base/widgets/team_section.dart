@@ -9,7 +9,8 @@ import 'package:magveto_web/base/widgets/team_member_card.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TeamSection extends StatefulWidget {
-  const TeamSection({super.key});
+  final String title;
+  const TeamSection({super.key, this.title = 'Tagjaink'});
 
   @override
   State<TeamSection> createState() => _TeamSectionState();
@@ -55,7 +56,7 @@ class _TeamSectionState extends State<TeamSection> {
     final theme = Theme.of(context);
 
     return Section(
-      title: 'Tagjaink',
+      title: widget.title,
       heightFactor: context.isMobile() ? 1 : 0.7,
       padding: const EdgeInsets.symmetric(
         vertical: 64.0,
@@ -117,7 +118,7 @@ class _TeamSectionState extends State<TeamSection> {
 
   void calculateWidgetsInOnePage() {
     const widgetWidth = 200.0;
-    final horizontalGap = Theme.of(context).cardTheme.margin?.horizontal ?? 0;
+    final horizontalGap = context.theme().cardTheme.margin?.horizontal ?? 0;
     final availableWidth = min(context.getScreenSize().width, 1600) - 2 * _sectionPadding;
     final widgetsInOnePage = (availableWidth / (widgetWidth + horizontalGap)).floor();
 

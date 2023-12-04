@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:magveto_web/base/extensions/extensions.dart';
 
 class Section extends StatelessWidget {
   final Widget child;
@@ -27,9 +28,7 @@ class Section extends StatelessWidget {
       child: Container(
         constraints: BoxConstraints(
           minHeight: MediaQuery.of(context).size.height * heightFactor,
-          maxHeight: fit == SectionFit.expanded
-              ? MediaQuery.of(context).size.height * heightFactor
-              : double.infinity,
+          maxHeight: fit == SectionFit.expanded ? MediaQuery.of(context).size.height * heightFactor : double.infinity,
           maxWidth: min(MediaQuery.of(context).size.width, 1600),
         ),
         padding: padding ?? EdgeInsets.zero,
@@ -40,7 +39,7 @@ class Section extends StatelessWidget {
                 padding: const EdgeInsets.all(24.0),
                 child: Text(
                   title!,
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: context.theme().textTheme.displayMedium,
                   textAlign: TextAlign.center,
                 ),
               ),

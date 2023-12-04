@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magveto_web/base/extensions/extensions.dart';
 import 'package:magveto_web/base/widgets/image_card.dart';
+import 'package:magveto_web/base/widgets/web_clickable_widget.dart';
 
 class ImageViewer extends StatefulWidget {
   final List<String> images;
@@ -57,11 +58,9 @@ class _ImageViewerState extends State<ImageViewer> {
     return Stack(
       children: [
         Positioned.fill(
-          child: Container(
-            color: Colors.transparent,
-            child: GestureDetector(
-              onTap: Navigator.of(context).pop,
-            ),
+          child: WebClickableWidget(
+            onTap: Navigator.of(context).pop,
+            builder: (_, __) => Container(color: Colors.transparent),
           ),
         ),
         Align(
@@ -97,22 +96,19 @@ class _ImageViewerState extends State<ImageViewer> {
         Positioned(
           top: 24,
           right: 32,
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: Navigator.of(context).pop,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: theme.colorScheme.surface,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Icon(
-                    Icons.close,
-                    size: 32,
-                    color: theme.colorScheme.onPrimaryContainer,
-                  ),
+          child: WebClickableWidget(
+            onTap: Navigator.of(context).pop,
+            builder: (_, __) => Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: theme.colorScheme.surface,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Icon(
+                  Icons.close,
+                  size: 32,
+                  color: theme.colorScheme.onPrimaryContainer,
                 ),
               ),
             ),

@@ -7,17 +7,19 @@ import 'package:magveto_web/base/theme/secondary_text_theme.dart';
 class FeatureIconTextWidget extends StatelessWidget {
   final String fileName;
   final String text;
+  final TextStyle? style;
 
   const FeatureIconTextWidget({
     super.key,
     required this.fileName,
     required this.text,
+    this.style,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final handwritten = Theme.of(context).extension<SecondaryTextTheme>()?.handWritten;
+    final finalStyle = style ?? context.theme().extension<SecondaryTextTheme>()?.handWritten;
 
     return Container(
       margin: const EdgeInsets.all(24.0),
@@ -32,16 +34,17 @@ class FeatureIconTextWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SvgPicture.asset(
-            'assets/icons/$fileName',
-            colorFilter: theme.colorScheme.onSecondaryContainer.toColorFilter(),
-            height: 80,
-            width: 80,
+          Expanded(
+            child: SvgPicture.asset(
+              'assets/icons/$fileName',
+              colorFilter: theme.colorScheme.onSecondaryContainer.toColorFilter(),
+            ),
           ),
           const Gap(8.0),
           Text(
             text,
-            style: handwritten,
+            style: finalStyle,
+            textAlign: TextAlign.center,
           ),
         ],
       ),

@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "prod": "magveto-web"
+  },
+  "targets": {},
+  "etags": {}
+}

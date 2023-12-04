@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:magveto_web/base/enums/cloud_shape_type.dart';
+import 'package:magveto_web/base/extensions/custom_theme.dart';
 import 'package:magveto_web/base/widgets/flexible_content_image.dart';
 
 extension TextStyleX on TextStyle? {
@@ -37,6 +38,10 @@ extension BuildContextX on BuildContext {
   bool isDesktop() => getScreenSize().width > 768;
 
   Size getScreenSize() => MediaQuery.of(this).size;
+
+  ThemeData theme() => Theme.of(this);
+
+  CustomTheme? customTheme() => theme().extension<CustomTheme>();
 }
 
 extension ColorX on Color {
@@ -51,7 +56,7 @@ extension DateTimeX on DateTime {
   }
 
   String toMMMMddShortFormat() {
-    return '${toMMMMShortFormat()} $day';
+    return '${toMMMMShortFormat()} $day.';
   }
 
   String toMMMMShortFormat() => DateFormat('MMMM').format(this).substring(0, 3);
@@ -77,8 +82,6 @@ extension CloudShapeTypeX on CloudShapeType {
 }
 
 extension ImagePositionX on ImagePosition {
-
-
   Alignment toAlignment() => switch (this) {
         ImagePosition.top => Alignment.topCenter,
         ImagePosition.right => Alignment.centerRight,
