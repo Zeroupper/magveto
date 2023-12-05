@@ -17,11 +17,11 @@ class MediaSection extends StatefulWidget {
 }
 
 class _TeamSectionState extends State<MediaSection> {
-  final _sectionPadding = 64.0;
+  double _sectionPadding = 64.0;
 
   final _controller = PageController();
 
-  final List<Media> team = [
+  final List<Media> medias = [
     Media.mock(),
     Media.mock(),
     Media.mock(),
@@ -118,9 +118,19 @@ class _TeamSectionState extends State<MediaSection> {
 
     _pages = [];
 
-    for (int i = 0; i < team.length; i += widgetsInOnePage) {
-      final pageEnd = (i + widgetsInOnePage < team.length) ? i + widgetsInOnePage : team.length;
-      final pageItems = team.sublist(i, pageEnd);
+    if (widgetsInOnePage == 0) {
+      _sectionPadding = 16;
+      _pages = medias
+          .map(
+            (media) => MediaCard(media: media),
+          )
+          .toList();
+      return;
+    }
+
+    for (int i = 0; i < medias.length; i += widgetsInOnePage) {
+      final pageEnd = (i + widgetsInOnePage < medias.length) ? i + widgetsInOnePage : medias.length;
+      final pageItems = medias.sublist(i, pageEnd);
 
       _pages.add(
         Row(

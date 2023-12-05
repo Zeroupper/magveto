@@ -17,7 +17,7 @@ class EventSection extends StatefulWidget {
 }
 
 class _TeamSectionState extends State<EventSection> {
-  final _sectionPadding = 64.0;
+  double _sectionPadding = 64.0;
 
   final _controller = PageController();
 
@@ -116,6 +116,16 @@ class _TeamSectionState extends State<EventSection> {
     final widgetsInOnePage = (availableWidth / (widgetWidth + horizontalGap)).floor();
 
     _pages = [];
+
+    if (widgetsInOnePage == 0) {
+      _sectionPadding = 16;
+      _pages = events
+          .map(
+            (event) => EventCard(event: event),
+          )
+          .toList();
+      return;
+    }
 
     for (int i = 0; i < events.length; i += widgetsInOnePage) {
       final pageEnd = (i + widgetsInOnePage < events.length) ? i + widgetsInOnePage : events.length;

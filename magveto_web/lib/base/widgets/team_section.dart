@@ -17,7 +17,7 @@ class TeamSection extends StatefulWidget {
 }
 
 class _TeamSectionState extends State<TeamSection> {
-  final _sectionPadding = 64.0;
+  late double _sectionPadding;
 
   final _controller = PageController();
 
@@ -42,6 +42,7 @@ class _TeamSectionState extends State<TeamSection> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _sectionPadding = context.isMobile() ? 16 : 64.0;
     calculateWidgetsInOnePage();
   }
 
@@ -123,6 +124,16 @@ class _TeamSectionState extends State<TeamSection> {
     final widgetsInOnePage = (availableWidth / (widgetWidth + horizontalGap)).floor();
 
     _pages = [];
+
+    if (widgetsInOnePage == 0) {
+      _sectionPadding = 16;
+      _pages = team
+          .map(
+            (member) => TeamMemberCard(teamMember: member, width: null),
+          )
+          .toList();
+      return;
+    }
 
     for (int i = 0; i < team.length; i += widgetsInOnePage) {
       final pageEnd = (i + widgetsInOnePage < team.length) ? i + widgetsInOnePage : team.length;

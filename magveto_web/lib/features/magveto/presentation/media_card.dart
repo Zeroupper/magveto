@@ -6,10 +6,10 @@ import 'package:magveto_web/base/widgets/web_clickable_widget.dart';
 import 'package:magveto_web/features/magveto/domain/media.dart';
 
 class MediaCard extends StatelessWidget {
-  final double width;
+  final double? width;
   final Media media;
 
-  const MediaCard({super.key, required this.media, required this.width});
+  const MediaCard({super.key, required this.media, this.width});
 
   @override
   Widget build(BuildContext context) {

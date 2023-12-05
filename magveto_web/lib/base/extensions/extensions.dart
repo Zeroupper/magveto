@@ -33,7 +33,7 @@ extension ButtonStyleX on ButtonStyle {
 extension BuildContextX on BuildContext {
   bool isMobile() => getScreenSize().width <= 480;
 
-  bool isTablet() => getScreenSize().width <= 768;
+  bool isTablet() => getScreenSize().width <= 768 && getScreenSize().width > 480;
 
   bool isDesktop() => getScreenSize().width > 768;
 

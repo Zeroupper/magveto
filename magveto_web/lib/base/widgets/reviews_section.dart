@@ -18,8 +18,7 @@ class ReviewsSection extends StatefulWidget {
 class _ReviewsSectionState extends State<ReviewsSection> {
   final _controller = PageController();
 
-  final _horizontalPadding = 32.0;
-  final _sectionPadding = 64.0;
+  double _sectionPadding = 64.0;
 
   final List<Review> reviews = [
     Review.mock(),
@@ -121,6 +120,25 @@ class _ReviewsSectionState extends State<ReviewsSection> {
 
     _pages = [];
 
+    if (widgetsInOnePage == 0) {
+      _sectionPadding = 16;
+      _pages = reviews
+          .map(
+            (review) => Align(
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: ReviewWidget(
+                    review: review,
+                  ),
+                ),
+              ),
+            ),
+          )
+          .toList();
+      return;
+    }
+
     for (int i = 0; i < reviews.length; i += widgetsInOnePage) {
       final pageEnd = (i + widgetsInOnePage < reviews.length) ? i + widgetsInOnePage : reviews.length;
       final pageItems = reviews.sublist(i, pageEnd);
@@ -130,12 +148,14 @@ class _ReviewsSectionState extends State<ReviewsSection> {
           mainAxisAlignment: widgetsInOnePage == 1 ? MainAxisAlignment.center : MainAxisAlignment.spaceAround,
           children: pageItems
               .map(
-                (review) => Card(
-                  child: Container(
-                    width: widgetWidth,
-                    padding: EdgeInsets.all(_horizontalPadding),
-                    child: ReviewWidget(
-                      review: review,
+                (review) => Align(
+                  child: Card(
+                    child: Container(
+                      width: widgetWidth,
+                      padding: const EdgeInsets.all(32.0),
+                      child: ReviewWidget(
+                        review: review,
+                      ),
                     ),
                   ),
                 ),
